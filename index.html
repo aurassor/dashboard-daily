@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Dashboard Pessoal</title>
+    <script src="https://cdn.tailwindcss.com"></script> <!--importa o tailwhind css-->
+</head>
+
+<body class="bg-gray-900 text-white p-6">
+
+    <header class="mb-8 text-center">
+        <h1 class="text-4xl font-bold">Painel de Controle</h1>
+        <p class="text-gray-400"> Suas informações diárias reunidas</p>
+    </header>
+
+    <main class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        
+        <section class="bg-white/10 p-6 rounded-2xl border-2 border-white/20 backdrop-blur-md flexflex-col">
+            <div class="flex items-center justify-between">
+                <h2 class="text-xl font-semibold mb-4">🌤️ Clima</h2>
+                <span id="weather-location" class="text-xs mb-4 p-1 font-medium bg-white/10 rounded-lg text-slate-300">
+                    Carregando...
+                </span>
+            </div>
+            <!-- Esta div está vazia de propósito. O JavaScript vai preenchê-la! -->
+            <div id="clima-container">
+                <p>Carregando clima...</p>
+            </div>
+        </section>
+
+        <section class="bg-white/10 p-6 rounded-2xl border-2 border-white/20 backdrop-blur-md">
+            <h2 class="text-xl font-semibold mb-4">📰 Notícias</h2>
+            
+            <div id="noticias-container">
+                <p>Carregando notícias...</p>
+            </div>
+        </section>
+
+        <section class="bg-white/10 p-6 rounded-2xl border-2 border-white/20 backdrop-blur-md">
+            <h2 class="text-xl font-semibold mb-4">🏷️ Promoções</h2>
+            
+            <div id="promocoes-container">
+                <p>Carregando promoções...</p>
+            </div>
+        </section>
+        
+    </main>
+
+    <script>
+            async function carregarClima(){
+                await new Promise(resolve=>setTimeout(resolve, 2000));
+                
+                const dadosAPI = {
+                temperatura: 32.0,
+                condicao: "Céu Limpo",
+                cidade: "Varjota-Ce",
+                umidade: "20",
+                vento: "12",
+                chuva: "17"
+                };
+                
+                const containerClima = document.getElementById('clima-container');
+                const locationSpan = document.getElementById('weather-location');
+                locationSpan.innerText = dadosAPI.cidade;
+
+                containerClima.innerHTML = `
+                    <div class="pb-10 flex flex-col items-center text-center">
+                        <div class="items-center justify-center text-8xl">☀️</div>
+                        <p class="font-semibold p-6 text-sm text-gray-400 mt-3 pt-3">${dadosAPI.condicao}</p>
+                        <p class="text-4xl font-bold">${dadosAPI.temperatura}°C</p>
+                        
+                    </div>
+                    <div class= "mt-8 border-t-2 border-white/20 flex items-center justify-center">
+                        <p class="font-semibold p-4 text-sm text-gray-400 mt-3 pt-3">Chuva: ${dadosAPI.chuva}%</p>
+                        <p class="font-semibold p-4 text-sm text-gray-400 mt-3 pt-3">Umidade: ${dadosAPI.umidade}%</p>
+                        <p class="font-semibold p-4 text-sm text-gray-400 mt-3 pt-3">Vento: ${dadosAPI.vento}km/h</p>
+                    </div>
+                    `
+            }
+            carregarClima();
+
+            async function carregarNoticias(){
+                await new Promise(resolve=>setTimeout(resolve, 2500));
+
+                const dadosNoticias = [
+                    {titulo: "Virginia lança celular próprio", fonte: "Choquei", tempo:"Há 2 horas"},
+                    {titulo: "Felca choca o mundo", fonte: "Globo", tempo:"Há 3 horas"},
+                    {titulo: "Dedo do Lula cresce novamente", fonte: "Jovem Pan", tempo:"Há 5 horas"},
+                    {titulo: "Flávio Bolsonaro rebolou lentinho", fonte: "ICL", tempo:"Há 14 horas"}
+                ]
+
+                const containerNoticias = document.getElementById('noticias-container');
+
+                containerNoticias.innerHTML = dadosNoticias.map(noticia => `
+                <div class="cursor-pointer bg-black/10 hover:bg-black/20 rounded-2xl mb-4 p-4 border border-white/20">
+                    <h3 class="text-md font-semibold text-white/90">${noticia.titulo}</h3>
+                    <div class= "flex items-center">
+                        <p class="font-semibold text-xs text-gray-400 mt-1">${noticia.fonte} •&nbsp</p>
+                        <p class=" text-xs text-gray-400 mt-1"> ${noticia.tempo}</p>
+                    </div>
+                </div>
+                `).join('');
+            }
+            carregarNoticias();
+    </script>
+    
+</body>
+</html>
